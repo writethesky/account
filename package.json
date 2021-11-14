@@ -81,13 +81,6 @@
           }
         },
         {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "linux",
-            "win32"
-          ]
-        },
-        {
           "name": "@electron-forge/maker-dmg",
           "config": {
             "format": "ULFO"
