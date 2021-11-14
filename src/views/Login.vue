@@ -1,40 +1,52 @@
 <template>
   <div class="login">
     <div>
-      <input type="password" placeholder="请输入访问密码" v-model="password" @keyup="login"/>
+      <input v-model="username" placeholder="请输入账号" type="text"/>
+      <input v-model="password" placeholder="请输入密码" type="password"/>
+      <button @click="login">登录</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import {Vue} from 'vue-class-component';
-import store from "@/store";
-
+import api from "@/api";
 
 export default class Login extends Vue {
-  realPassword = "123456"
+  username = ""
   password = ""
 
-  login(): void {
-    if (this.realPassword == this.password) {
-      store.commit("alert", "密码正确")
+  created() {
+    if (api.token.has()) {
       this.$router.push({name: "Home"})
-      return
     }
-    if (this.password.length >= this.realPassword.length) {
-      store.commit("alert", "密码错误")
-      return
-    }
+  }
+
+  async login() {
+    await api.token.create(this.username, this.password)
+    await this.$router.push({name: "Home"})
   }
 
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 input {
   height: 45px;
-  width: 300px;
+  width: 340px;
   padding: 0 20px;
-  margin-top: 180px;
+  margin: 10px auto;
+  border: 1px solid;
+  border-radius: 6px;
+  display: block;
+  font-size: 15px;
+}
+
+button {
+  height: 45px;
+  line-height: 45px;
+  width: 340px;
+  font-size: 16px;
+  letter-spacing: 2px;
 }
 </style>

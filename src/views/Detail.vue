@@ -1,12 +1,15 @@
 <template>
   <div class="detail">
-    <div class="back" @click="$router.back()">&leftarrow;</div>
+    <div class="back" @click="back">&leftarrow;</div>
     <div class="title">
-      <input type="text" v-model="account.title" placeholder="起个名称">
+      <input v-model="account.title" placeholder="a name" type="text" @keyup="titleChange">
     </div>
-    <AccountComponent v-if="account.type == 'account'" :account_data="account.data" @change="change"></AccountComponent>
-    <EmailComponent v-if="account.type == 'email'" :account_data="account.data" @change="change"></EmailComponent>
-    <SSHComponent v-if="account.type == 'ssh'" :account_data="account.data" @change="change"></SSHComponent>
+    <AccountComponent v-if="account.type == AccountTypeEnum.Normal" :account_data="account.data"
+                      @change="change"></AccountComponent>
+    <EmailComponent v-if="account.type == AccountTypeEnum.Email" :account_data="account.data"
+                    @change="change"></EmailComponent>
+    <SSHComponent v-if="account.type == AccountTypeEnum.SSH" :account_data="account.data"
+                  @change="change"></SSHComponent>
     <DatabaseComponent v-if="account.type == 'database'" :account_data="account.data"
                        @change="change"></DatabaseComponent>
   </div>
@@ -14,13 +17,17 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import store, {Account, CopyItem} from '@/store';
 import AccountComponent from '@/components/accountType/Account.vue'; // @ is an alias to /src
 import EmailComponent from '@/components/accountType/Email.vue';
 import SSHComponent from '@/components/accountType/SSH.vue';
 import DatabaseComponent from '@/components/accountType/Database.vue';
-import {v1 as uuidv1} from 'uuid';
+import api from "@/api";
+import {Account, AccountTypeEnum} from "@/type";
 
+enum PageMode {
+  Create,
+  Edit
+}
 
 @Options({
   components: {
@@ -32,47 +39,62 @@ import {v1 as uuidv1} from 'uuid';
 })
 
 export default class Detail extends Vue {
+  pageMode = 0
+  isChanged = false
   account: Account = {
-    id: "",
+    id: 0,
     title: "",
-    type: "",
+    type: AccountTypeEnum.Normal,
     copy_lists: [],
     data: {},
   }
 
-  unmounted() {
-    if (!this.account.title) {
+  get AccountTypeEnum() {
+    return AccountTypeEnum
+  }
+
+  async created(): Promise<void> {
+    let accountID = parseInt(this.$route.params["id"] as string)
+    this.account.type = parseInt(this.$route.params.type as string)
+
+    if ("" == this.$route.params["id"] || "undefined" == typeof (this.$route.params["id"])) {
+      this.pageMode = PageMode.Create
+    } else {
+      this.pageMode = PageMode.Edit
+    }
+
+    if (this.pageMode == PageMode.Create) {
       return
     }
-    store.commit("create_account", this.account)
+    this.account = await api.account.info(accountID)
   }
 
-  created(): void {
-
-    this.account.type = this.$route.params.type.toString()
-    if ("" == this.$route.params.id || typeof (this.$route.params.id) == "undefined") {
-
-      this.account.id = uuidv1();
-      return;
+  async back() {
+    if (!this.isChanged) {
+      this.$router.back()
+      return
     }
-    for (let i in store.state.account_list) {
-      if (store.state.account_list[i].id == this.$route.params.id) {
-        this.account = store.state.account_list[i]
-        return
-      }
-
+    if (this.pageMode == PageMode.Create) {
+      await api.account.create(this.account.title, this.account.type, this.account.data)
+    } else {
+      await api.account.edit(this.account.id, this.account.title, this.account.type, this.account.data)
     }
+
+    this.$router.back()
   }
 
-  change(account_data: Account, copy_lists: CopyItem[]): void {
+  titleChange() {
+    this.isChanged = true
+  }
+
+  change(account_data: Account): void {
     this.account.data = account_data
-    this.account.copy_lists = copy_lists
-
+    this.isChanged = true
   }
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .back {
   position: fixed;
   top: 0;
@@ -102,9 +124,9 @@ export default class Detail extends Vue {
 
 
 /deep/ .input-group {
-  height: 30px;
   line-height: 30px;
   margin: 20px;
+  overflow: hidden;
 
   .name {
     float: left;

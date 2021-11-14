@@ -1,16 +1,12 @@
 <template>
   <Alert></Alert>
-  <div id="nav">
-    <router-link to="/">锁定</router-link>
-    |
-    <router-link to="/about">About</router-link>
-  </div>
   <router-view/>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-import Alert from '@/components/Alert.vue'; // @ is an alias to /src
+import Alert from '@/components/Alert.vue';
+import api from "@/api"; // @ is an alias to /src
 
 @Options({
   components: {
@@ -18,6 +14,11 @@ import Alert from '@/components/Alert.vue'; // @ is an alias to /src
   },
 })
 export default class App extends Vue {
+  created() {
+    if (!api.token.has()) {
+      this.$router.push({name: "Login"})
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -25,6 +26,7 @@ export default class App extends Vue {
   margin: 0;
   padding: 0;
   user-select: none;
+  box-sizing: border-box;
 }
 
 .icon {
@@ -44,16 +46,4 @@ export default class App extends Vue {
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>

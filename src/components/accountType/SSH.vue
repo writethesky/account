@@ -1,27 +1,28 @@
 <template>
   <div class="ssh">
     <div class="input-group">
-      <div class="name">用户</div>
+      <div class="name">User</div>
       <div class="value">
-        <input type="text" placeholder="请输入账号" v-model="account_data.user" @keyup="saveValue">
+        <input v-model="account_data.user" placeholder="Please enter your user" type="text" @keyup="saveValue">
       </div>
     </div>
     <div class="input-group">
-      <div class="name">密码</div>
+      <div class="name">Password</div>
       <div class="value">
-        <input type="password" placeholder="请输入密码" v-model="account_data.password" @keyup="saveValue">
+        <input v-model="account_data.password" placeholder="Please enter your password" type="password"
+               @keyup="saveValue">
       </div>
     </div>
     <div class="input-group">
-      <div class="name">地址</div>
+      <div class="name">Address</div>
       <div class="value">
-        <input type="text" placeholder="请输入地址" v-model="account_data.address" @keyup="saveValue">
+        <input v-model="account_data.address" placeholder="Please enter your address" type="text" @keyup="saveValue">
       </div>
     </div>
     <div class="input-group">
-      <div class="name">端口</div>
+      <div class="name">Port</div>
       <div class="value">
-        <input type="text" placeholder="请输入地址" v-model="account_data.port" @keyup="saveValue">
+        <input v-model="account_data.port" placeholder="Please enter your port" type="text" @keyup="saveValue">
       </div>
     </div>
   </div>
@@ -49,11 +50,7 @@ export default class Account extends Vue {
   account_data!: AccountTypeSSH
 
   saveValue() {
-    let copy_lists = [
-      {name: "连接信息", value: this.account_data.user + '@' + this.account_data.address + ':' + this.account_data.port},
-      {name: "密码", value: this.account_data.password}
-    ]
-    this.$emit("change", this.account_data, copy_lists)
+    this.$emit("change", this.account_data)
   }
 }
 
@@ -61,6 +58,6 @@ export default class Account extends Vue {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="less">
+<style lang="less" scoped>
 
 </style>

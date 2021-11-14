@@ -3,20 +3,6 @@ import {nextTick} from 'vue';
 import {Buffer} from "buffer";
 
 
-export interface Account {
-    id: string
-    title: string
-    type: string
-    copy_lists: CopyItem[]
-    data: unknown
-}
-
-export interface CopyItem {
-    name: string,
-    value: string
-}
-
-
 export default createStore({
     state: {
         account_list: <Account[]>[],
@@ -24,48 +10,14 @@ export default createStore({
         alert_message: "",
         alert_show_time: 5,
         is_init_account_list: false,
+        token: {
+            token: "",
+            expire: "",
+        },
     },
     mutations: {
-        async init_account_list(state) {
-            if (state.is_init_account_list) {
-                return
-            }
-
-            state.is_init_account_list = true
-            const data = localStorage.getItem("account_list")
-            if (!data) {
-                return
-            }
-            state.account_list = await decrypt(data)
-        },
-        create_account(state, account) {
-            let is_find = false
-            for (const i in state.account_list) {
-                if (state.account_list[i].id == account.id) {
-                    is_find = true
-                    // state.account_list.splice(parseInt(i), 1, account)
-                    state.account_list[i] = account
-                    break
-                }
-            }
-            if (!is_find) {
-                state.account_list.push(account)
-            }
-
-            encrypt(state.account_list).then(r => {
-                localStorage.setItem("account_list", r)
-            })
-        },
-        delete_account(state, id: string) {
-            for (const i in state.account_list) {
-                if (state.account_list[i].id == id) {
-                    state.account_list.splice(Number(i), 1)
-                    encrypt(state.account_list).then(r => {
-                        localStorage.setItem("account_list", r)
-                    })
-                    return
-                }
-            }
+        set_token(state, token) {
+            state.token = token
         },
         async alert(state, message: string) {
             clearInterval(state.alert_handle)
