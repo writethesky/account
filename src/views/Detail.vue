@@ -2,7 +2,7 @@
   <div class="detail">
     <div class="back" @click="back">&leftarrow;</div>
     <div class="title">
-      <input v-model="account.title" placeholder="a name" type="text" @keyup="titleChange">
+      <input v-model="account.title" placeholder="Please enter a name" type="text" @keyup="titleChange">
     </div>
     <AccountComponent v-if="account.type == AccountTypeEnum.Normal" :account_data="account.data"
                       @change="change"></AccountComponent>
@@ -70,10 +70,22 @@ export default class Detail extends Vue {
   }
 
   async back() {
-    if (!this.isChanged) {
+
+    let allEmpty = true
+    for (let i in this.account.data) {
+      if (this.account.data[i] != "") {
+        allEmpty = false
+        break
+      }
+    }
+    if (this.account.title != "") {
+      allEmpty = false
+    }
+    if (allEmpty || !this.isChanged) {
       this.$router.back()
       return
     }
+
     if (this.pageMode == PageMode.Create) {
       await api.account.create(this.account.title, this.account.type, this.account.data)
     } else {
@@ -99,21 +111,23 @@ export default class Detail extends Vue {
   position: fixed;
   top: 0;
   left: 0;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
   border-radius: 50%;
+  font-size: 24px;
 }
 
 .title {
 
 
   input {
-    font-size: 30px;
+    font-size: 28px;
     text-align: center;
     border: none;
     width: 300px;
     background-color: transparent;
+    height: 60px;
 
     &:focus {
       outline: none;

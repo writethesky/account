@@ -6,7 +6,6 @@ const http = axios.create({
 })
 
 http.interceptors.request.use((config) => {
-    console.log(process.env)
     const {url} = config;
     config = {
         ...config,

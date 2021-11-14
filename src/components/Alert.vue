@@ -1,5 +1,5 @@
 <template>
-  <div class="alert" :class="{move: message != ''}">
+  <div :class="{move: message != ''}" class="alert">
     <div v-if="message != ''" class="success">{{ message }}</div>
   </div>
 </template>
@@ -16,10 +16,12 @@ export default class Alert extends Vue {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .alert {
   position: fixed;
   right: 0;
+  top: 0;
+  z-index: 1;
 
   .success {
     background-color: #42b983;

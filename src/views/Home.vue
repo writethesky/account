@@ -1,9 +1,18 @@
 <template>
   <div class="home" @click="is_show_add_list = false">
     <!--    <img alt="Vue logo" src="../assets/logo.png">-->
-    <div @click="logout">logout</div>
-    <div>lock</div>
-    <div>about</div>
+    <div class="tool-btn">
+      <svg aria-hidden="true" class="icon logout" @click="logout">
+        <use xlink:href="#icon-exit"></use>
+      </svg>
+      <svg aria-hidden="true" class="icon lock">
+        <use xlink:href="#icon-lock"></use>
+      </svg>
+      <svg aria-hidden="true" class="icon" @click="about">
+        <use xlink:href="#icon-about"></use>
+      </svg>
+    </div>
+
     <div v-if="account_list.length" class="tip">The long press is a good habit, sometimes more than a few times to
       achieve unexpected results
     </div>
@@ -59,6 +68,10 @@ export default class Home extends Vue {
   logout() {
     api.token.delete()
     this.$router.push({name: "Login"})
+  }
+
+  about() {
+    this.$router.push({name: "About"})
   }
 
   mousedown(id: number) {
@@ -146,9 +159,27 @@ export default class Home extends Vue {
   height: 600px;
 }
 
+.tool-btn {
+  height: 50px;
+  line-height: 50px;
+
+  svg {
+    font-size: 20px;
+    margin: 0 10px;
+
+    &.logout {
+      color: #fb6985;
+    }
+
+    &.lock {
+      color: #da8d3a;
+    }
+  }
+}
+
 .tip {
   font-size: 12px;
-  padding: 20px;
+  padding: 0px 20px 20px;
   color: #da8d3a;
 }
 

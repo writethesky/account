@@ -31,11 +31,15 @@ export default class Login extends Vue {
 </script>
 
 <style lang="less" scoped>
+.login {
+  margin-top: 100px;
+}
+
 input {
   height: 45px;
   width: 340px;
   padding: 0 20px;
-  margin: 10px auto;
+  margin: 20px auto;
   border: 1px solid;
   border-radius: 6px;
   display: block;
