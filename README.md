@@ -34,6 +34,12 @@ yarn build
 yarn start
 ```
 
+### make app
+
+```
+yarn make
+```
+
 ### Run your unit tests
 
 ```
@@ -50,6 +56,13 @@ yarn test:e2e
 
 ```
 yarn lint
+```
+
+### Generate icons
+
+```
+sips -z 1024 1024 book.png --out icons.iconset/icon_512x512@2x.png
+iconutil -c icns icons.iconset -o icon.icns
 ```
 
 ### Customize configuration
