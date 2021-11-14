@@ -5,7 +5,7 @@
       <svg aria-hidden="true" class="icon logout" @click="logout">
         <use xlink:href="#icon-exit"></use>
       </svg>
-      <svg aria-hidden="true" class="icon lock">
+      <svg aria-hidden="true" class="icon lock" @click="lock">
         <use xlink:href="#icon-lock"></use>
       </svg>
       <svg aria-hidden="true" class="icon" @click="about">
@@ -68,6 +68,11 @@ export default class Home extends Vue {
   logout() {
     api.token.delete()
     this.$router.push({name: "Login"})
+  }
+
+  lock() {
+    api.token.delete()
+    this.$router.push({name: "Lock"})
   }
 
   about() {

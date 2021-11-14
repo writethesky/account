@@ -34,6 +34,7 @@ const token = {
             }).then(function (response: any) {
                 store.commit("set_token", response)
                 localStorage.setItem("token", JSON.stringify(response))
+                localStorage.setItem("username", username)
                 resolve(response)
             }).catch(function (err: any) {
                 store.commit("alert", err.response.data.message)
