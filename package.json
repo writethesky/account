@@ -1,6 +1,8 @@
 {
   "name": "account",
   "version": "0.1.0",
+  "author": "writethesky",
+  "description": "Easy to manage your various account passwords",
   "private": true,
   "main": "main.js",
   "scripts": {
