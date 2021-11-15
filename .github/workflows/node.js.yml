@@ -13,7 +13,9 @@ jobs:
   build-macos:
 
     runs-on: macos-11
-
+    env:
+      VUE_APP_API_URL: http://146.56.134.252:8080
+      
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14.x
@@ -29,15 +31,18 @@ jobs:
       - name: Archive production artifacts - darwin x64
         uses: actions/upload-artifact@v2
         with:
-          name: account-0.1.0-x64.dmg
+          name: account-0.1.0-darwin-x64.dmg
           path: out/make/account-0.1.0-x64.dmg
       - name: Archive production artifacts - darwin arm64
         uses: actions/upload-artifact@v2
         with:
-          name: account-0.1.0-arm64.dmg
+          name: account-0.1.0-darwin-arm64.dmg
           path: out/make/account-0.1.0-arm64.dmg
   build-windows:
     runs-on: windows-latest
+    env:
+      VUE_APP_API_URL: http://146.56.134.252:8080
+      
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14.x
@@ -52,15 +57,15 @@ jobs:
       - name: Archive production artifacts - set up
         uses: actions/upload-artifact@v2
         with:
-          name: account-0.1.0 Setup.exe
+          name: account-0.1.0-windows-x64.exe
           path: out/make/squirrel.windows/x64/account-0.1.0 Setup.exe
       - name: Archive production artifacts - nupkg
         uses: actions/upload-artifact@v2
         with:
-          name: account-0.1.0-full.nupkg
+          name: account-0.1.0-windows-x64.nupkg
           path: out/make/squirrel.windows/x64/account-0.1.0-full.nupkg
       - name: Archive production artifacts - release
         uses: actions/upload-artifact@v2
         with:
-          name: RELEASES
+          name: account-0.1.0-windows-RELEASES
           path: out/make/squirrel.windows/x64/RELEASES
