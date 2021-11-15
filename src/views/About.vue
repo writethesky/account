@@ -1,9 +1,6 @@
 <template>
   <div class="about">
-    <div class="back" @click="back">&leftarrow;</div>
-    <div class="title">
-      About
-    </div>
+    <BackHeadComponent title="About"></BackHeadComponent>
     <div>Easy to manage your various account passwords.</div>
     <h4>Current support：</h4>
     <ul>
@@ -17,33 +14,17 @@
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
+import BackHeadComponent from '@/components/BackHead.vue';
 
+@Options({
+  components: {
+    BackHeadComponent
+  }
+})
 export default class About extends Vue {
   back() {
     this.$router.back()
   }
 }
 </script>
-
-<style lang="less" scoped>
-.back {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
-  border-radius: 50%;
-  font-size: 24px;
-}
-
-.title {
-  font-size: 28px;
-  text-align: center;
-  border: none;
-  background-color: transparent;
-  height: 60px;
-  line-height: 60px;
-}
-</style>

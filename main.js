@@ -18,7 +18,7 @@ function createWindow() {
     mainWindow.loadFile('./dist/index.html')
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
 
 
 }

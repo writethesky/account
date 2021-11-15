@@ -8,8 +8,8 @@
       <svg aria-hidden="true" class="icon lock" @click="lock">
         <use xlink:href="#icon-lock"></use>
       </svg>
-      <svg aria-hidden="true" class="icon" @click="about">
-        <use xlink:href="#icon-about"></use>
+      <svg aria-hidden="true" class="icon setting" @click="setting">
+        <use xlink:href="#icon-setting"></use>
       </svg>
     </div>
 
@@ -73,6 +73,10 @@ export default class Home extends Vue {
   lock() {
     api.token.delete()
     this.$router.push({name: "Lock"})
+  }
+
+  setting() {
+    this.$router.push({name: "Setting"})
   }
 
   about() {
@@ -178,6 +182,10 @@ export default class Home extends Vue {
 
     &.lock {
       color: #da8d3a;
+    }
+
+    &.setting {
+      color: #90b33c;
     }
   }
 }
