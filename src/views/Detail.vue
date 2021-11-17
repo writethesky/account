@@ -4,6 +4,9 @@
     <div class="title">
       <input v-model="account.title" placeholder="Please enter a name" type="text" @keyup="titleChange">
     </div>
+    <svg v-if="isSecure" aria-hidden="true" class="icon secure" @click="secureTip">
+      <use xlink:href="#icon-security"></use>
+    </svg>
     <AccountComponent v-if="account.type == AccountTypeEnum.Normal" :account_data="account.data"
                       @change="change"></AccountComponent>
     <EmailComponent v-if="account.type == AccountTypeEnum.Email" :account_data="account.data"
@@ -23,6 +26,7 @@ import SSHComponent from '@/components/accountType/SSH.vue';
 import DatabaseComponent from '@/components/accountType/Database.vue';
 import api from "@/api";
 import {Account, AccountTypeEnum} from "@/type";
+import store from '@/store'
 
 enum PageMode {
   Create,
@@ -47,6 +51,10 @@ export default class Detail extends Vue {
     type: AccountTypeEnum.Normal,
     copy_lists: [],
     data: {},
+  }
+
+  get isSecure() {
+    return store.state.isSecure
   }
 
   get AccountTypeEnum() {
@@ -103,10 +111,26 @@ export default class Detail extends Vue {
     this.account.data = account_data
     this.isChanged = true
   }
+
+  secureTip() {
+    store.commit("alert", "Ultimate security is protecting you")
+  }
 }
 </script>
 
 <style lang="less" scoped>
+
+.secure {
+  color: #42b983;
+  position: fixed;
+  bottom: 100px;
+  font-size: 58px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  opacity: 0.5;
+}
+
 .back {
   position: fixed;
   top: 0;

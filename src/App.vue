@@ -6,7 +6,8 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import Alert from '@/components/Alert.vue';
-import api from "@/api"; // @ is an alias to /src
+import api from "@/api";
+import store from "@/store"; // @ is an alias to /src
 
 @Options({
   components: {
@@ -18,6 +19,8 @@ export default class App extends Vue {
     if (!api.token.has()) {
       this.$router.push({name: "Login"})
     }
+
+    store.commit("setSecure", localStorage.getItem("secure") === true.toString())
   }
 }
 </script>

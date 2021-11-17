@@ -5,7 +5,7 @@ import {Buffer} from "buffer";
 
 export default createStore({
     state: {
-        account_list: <Account[]>[],
+        context: <any>{},
         alert_handle: 0,
         alert_message: "",
         alert_show_time: 5,
@@ -14,10 +14,17 @@ export default createStore({
             token: "",
             expire: "",
         },
+        isSecure: false,
     },
     mutations: {
         set_token(state, token) {
             state.token = token
+        },
+        setSecure(state, isSecure) {
+            state.isSecure = isSecure
+        },
+        setContext(state, obj) {
+            state.context[obj.requestID] = obj.ivBuffer
         },
         async alert(state, message: string) {
             clearInterval(state.alert_handle)

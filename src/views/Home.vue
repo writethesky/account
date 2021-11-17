@@ -2,6 +2,9 @@
   <div class="home" @click="is_show_add_list = false">
     <!--    <img alt="Vue logo" src="../assets/logo.png">-->
     <div class="tool-btn">
+      <svg v-if="isSecure" aria-hidden="true" class="icon secure" @click="secureTip">
+        <use xlink:href="#icon-security"></use>
+      </svg>
       <svg aria-hidden="true" class="icon logout" @click="logout">
         <use xlink:href="#icon-exit"></use>
       </svg>
@@ -12,6 +15,7 @@
         <use xlink:href="#icon-setting"></use>
       </svg>
     </div>
+
 
     <div v-if="account_list.length" class="tip">The long press is a good habit, sometimes more than a few times to
       achieve unexpected results
@@ -58,11 +62,18 @@ export default class Home extends Vue {
   is_show_add_list = false
   copy_history: any = {}
   AccountTypeEnum = AccountTypeEnum
-
   account_list: Array<Account> = []
+
+  get isSecure() {
+    return store.state.isSecure
+  }
 
   async created() {
     this.account_list = await api.account.list()
+  }
+
+  secureTip() {
+    store.commit("alert", "Ultimate security is protecting you")
   }
 
   logout() {
@@ -168,6 +179,7 @@ export default class Home extends Vue {
   height: 600px;
 }
 
+
 .tool-btn {
   height: 50px;
   line-height: 50px;
@@ -175,6 +187,10 @@ export default class Home extends Vue {
   svg {
     font-size: 20px;
     margin: 0 10px;
+
+    &.secure {
+      color: #42b983;
+    }
 
     &.logout {
       color: #fb6985;

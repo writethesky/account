@@ -12,12 +12,26 @@
         <div class="tip" @click="changePage">Already got an account? Click here to login</div>
       </div>
 
+      <div class="security">
+        <div :class="{checked: isSecure}" class="checkbox">
+          <svg aria-hidden="true" class="icon" @click="secure">
+            <use xlink:href="#icon-security"></use>
+          </svg>
+          <span @click="secure">Ultimate security</span>
+        </div>
+
+        <div class="prompt">Secure data transmission in extreme circumstances (e.g. your computer communications may be
+          monitored).<br> Click the icon to enable or disable
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import {Vue} from 'vue-class-component';
+import store from '@/store'
 import api from "@/api";
 
 enum PageMode {
@@ -30,11 +44,14 @@ export default class Login extends Vue {
   password = ""
   PageMode = PageMode
   pageMode = PageMode.Login
+  isSecure = false
 
   created() {
     if (api.token.has()) {
       this.$router.push({name: "Home"})
     }
+
+    this.isSecure = localStorage.getItem("secure") === true.toString()
   }
 
   changePage() {
@@ -56,6 +73,12 @@ export default class Login extends Vue {
   async register() {
     await api.user.create(this.username, this.password)
     await this.login()
+  }
+
+  secure() {
+    this.isSecure = !this.isSecure
+    localStorage.setItem("secure", this.isSecure.toString())
+    store.commit("setSecure", this.isSecure)
   }
 
 }
@@ -96,5 +119,32 @@ button {
   border: 1px solid #1ba767;
   border-radius: 20px;
   margin-top: 10px;
+}
+
+.security {
+  .checkbox {
+    &.checked {
+      color: #42b983;
+    }
+
+
+    svg {
+      font-size: 55px;
+      display: block;
+      margin: 40px auto 0;
+
+    }
+
+    span {
+      font-size: 18px;
+
+    }
+  }
+
+
+  .prompt {
+    padding: 0 20px;
+    font-size: 14px;
+  }
 }
 </style>

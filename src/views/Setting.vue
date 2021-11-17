@@ -10,6 +10,14 @@
         <use xlink:href="#icon-arrow-right"></use>
       </svg>
     </div>
+    <div class="item" @click="changeSecure">
+      <svg aria-hidden="true" class="icon head">
+        <use xlink:href="#icon-security"></use>
+      </svg>
+      <span>Ultimate security</span>
+      <span v-if="isSecure" class="foot">Enable</span>
+      <span v-else class="foot">Disable</span>
+    </div>
     <div class="item" @click="link('About')">
       <svg aria-hidden="true" class="icon head">
         <use xlink:href="#icon-about"></use>
@@ -25,6 +33,7 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import BackHeadComponent from '@/components/BackHead.vue';
+import store from '@/store'
 
 @Options({
   components: {
@@ -33,8 +42,17 @@ import BackHeadComponent from '@/components/BackHead.vue';
 })
 
 export default class Setting extends Vue {
+  get isSecure() {
+    return store.state.isSecure
+  }
+
+
   link(name: string) {
     this.$router.push({name})
+  }
+
+  changeSecure() {
+    store.commit("alert", "You need to log out and then enable or disable it on the login page")
   }
 }
 </script>
