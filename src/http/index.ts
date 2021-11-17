@@ -128,7 +128,7 @@ http.interceptors.request.use(async (config) => {
             name: 'AES-GCM',
             iv: ivBuffer
         }, transferKey, new TextEncoder().encode(JSON.stringify(config.data)))
-   
+
     }
 
     return config
@@ -145,6 +145,9 @@ http.interceptors.response.use(async res => {
 
 async function getResponseData(requestID: string, data: any): Promise<any> {
     if (store.state.isSecure) {
+        if (data.byteLength == 0) {
+            return ""
+        }
         const ivBuffer = store.state.context[requestID]
         const resBody = await crypto.subtle.decrypt({
             name: 'AES-GCM',
