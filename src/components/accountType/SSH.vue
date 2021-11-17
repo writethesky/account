@@ -22,7 +22,7 @@
     <div class="input-group">
       <div class="name">Port</div>
       <div class="value">
-        <input v-model="account_data.port" placeholder="Please enter your port" type="text" @keyup="saveValue">
+        <input v-model.number="account_data.port" placeholder="Please enter your port" type="text" @keyup="saveValue">
       </div>
     </div>
   </div>
