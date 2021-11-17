@@ -20,6 +20,8 @@
     <div v-if="account_list.length" class="tip">The long press is a good habit, sometimes more than a few times to
       achieve unexpected results
     </div>
+    <div v-if="!account_list.length" class="empty">╮(๑•́ ₃•̀๑)╭Empty！<br><br> click on the plus sign below to create it
+    </div>
     <div class="account-list">
       <div v-for="account in account_list" :key="account.id" class="account-item"
            @touchstart.stop="mousedown(account.id)" @mousedown.stop="mousedown(account.id)" @touchend.stop="mouseup"
@@ -179,6 +181,11 @@ export default class Home extends Vue {
   height: 600px;
 }
 
+.empty {
+  font-size: 20px;
+  opacity: 0.5;
+  padding: 50px;
+}
 
 .tool-btn {
   height: 50px;
