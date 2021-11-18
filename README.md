@@ -1,5 +1,7 @@
 # Account
 
+![](./public/img/icon.png)
+
 Easy to manage your various account passwords. Current support：
 
 * account
@@ -24,7 +26,7 @@ to the bottom of the page, and select the app that matches your operating system
 By default, the Mac only trusts apps downloaded from the Mac App Store and signed with a developer ID, but it also
 blocks "honest apps" without a developer's signature.
 
-To resolve the problem, run the `sudo xattr -rd com.apple.quarantine /Applications/account.app` command
+To resolve the problem, run the `sudo xattr -rd com.apple.quarantine /Applications/Account.app` command
 
 ## For developer
 
