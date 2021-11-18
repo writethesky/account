@@ -6,7 +6,21 @@ Easy to manage your various account passwords. Current support：
 * email
 * server
 
-## Project setup
+## Downloads
+
+Click [Actions](https://github.com/writethesky/account/actions) to download the app. Then click on any workflow, scroll
+to the bottom of the page, and select the app that matches your operating system to download
+
+## Q&A
+
+### is damaged and can’t be opened. You should move it to the Trash
+
+By default, the Mac only trusts apps downloaded from the Mac App Store and signed with a developer ID, but it also
+blocks "honest apps" without a developer's signature.
+
+To resolve the problem, run the `sudo xattr -rd com.apple.quarantine /Applications/account.app` command
+
+## For developer
 
 ```
 yarn install
@@ -64,7 +78,3 @@ yarn lint
 sips -z 1024 1024 book.png --out icons.iconset/icon_512x512@2x.png
 iconutil -c icns icons.iconset -o icon.icns
 ```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
