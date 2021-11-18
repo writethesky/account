@@ -1,10 +1,16 @@
-# account
+# Account
 
 Easy to manage your various account passwords. Current support：
 
 * account
 * email
 * server
+
+**Ultimate security** can secure data transfers in extreme situations(e.g. your computer communications may be
+monitored), more secure than HTTPS. Here's the problem with HTTPS, Some unscrupulous CA work with companies or
+organizations to issue genuine and valid illegal certificates for man-in-the-middle attacks. Or you may use the work
+computer provided by the company. The company may have a [hook tool](https://github.com/nabla-c0d3/ssl-kill-switch2)
+preset on your computer, which can hook related functions of HTTPS
 
 ## Downloads
 
