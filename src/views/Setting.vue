@@ -42,16 +42,16 @@ import store from '@/store'
 })
 
 export default class Setting extends Vue {
-  get isSecure() {
+  get isSecure(): boolean {
     return store.state.isSecure
   }
 
 
-  link(name: string) {
+  link(name: string): void {
     this.$router.push({name})
   }
 
-  changeSecure() {
+  changeSecure(): void {
     store.commit("alert", "You need to log out and then enable or disable it on the login page")
   }
 }

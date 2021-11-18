@@ -2,8 +2,8 @@ import http from "@/http";
 import store from "@/store";
 
 const user = {
-    create(username: string, password: string) {
-        return new Promise((resolve, reject) => {
+    create(username: string, password: string): Promise<any> {
+        return new Promise((resolve, _) => {
             http.post("users", {
                 "password": password,
                 "username": username,
@@ -16,7 +16,7 @@ const user = {
         })
     },
     changePassword(password: string) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _) => {
             if (password == "") {
                 return
             }

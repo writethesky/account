@@ -49,7 +49,7 @@ interface AccountTypeSSH {
 export default class Account extends Vue {
   account_data!: AccountTypeSSH
 
-  saveValue() {
+  saveValue(): void {
     this.$emit("change", this.account_data)
   }
 }

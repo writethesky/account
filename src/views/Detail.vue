@@ -53,7 +53,7 @@ export default class Detail extends Vue {
     data: {},
   }
 
-  get isSecure() {
+  get isSecure(): boolean {
     return store.state.isSecure
   }
 
@@ -77,7 +77,7 @@ export default class Detail extends Vue {
     this.account = await api.account.info(accountID)
   }
 
-  async back() {
+  async back(): Promise<void> {
 
     let allEmpty = true
     for (let i in this.account.data) {
@@ -103,7 +103,7 @@ export default class Detail extends Vue {
     this.$router.back()
   }
 
-  titleChange() {
+  titleChange(): void {
     this.isChanged = true
   }
 
@@ -112,7 +112,7 @@ export default class Detail extends Vue {
     this.isChanged = true
   }
 
-  secureTip() {
+  secureTip(): void {
     store.commit("alert", "Ultimate security is protecting you")
   }
 }
@@ -161,7 +161,7 @@ export default class Detail extends Vue {
 }
 
 
-/deep/ .input-group {
+:deep(.input-group) {
   line-height: 30px;
   margin: 20px;
   overflow: hidden;

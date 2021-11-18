@@ -62,41 +62,41 @@ export default class Home extends Vue {
   isTouched = false
   touchStartTime = new Date().getTime()
   is_show_add_list = false
-  copy_history: any = {}
+  copy_history: Record<number, number> = {}
   AccountTypeEnum = AccountTypeEnum
   account_list: Array<Account> = []
 
-  get isSecure() {
+  get isSecure(): boolean {
     return store.state.isSecure
   }
 
-  async created() {
+  async created(): Promise<void> {
     this.account_list = await api.account.list()
   }
 
-  secureTip() {
+  secureTip(): void {
     store.commit("alert", "Ultimate security is protecting you")
   }
 
-  logout() {
+  logout(): void {
     api.token.delete()
     this.$router.push({name: "Login"})
   }
 
-  lock() {
+  lock(): void {
     api.token.delete()
     this.$router.push({name: "Lock"})
   }
 
-  setting() {
+  setting(): void {
     this.$router.push({name: "Setting"})
   }
 
-  about() {
+  about(): void {
     this.$router.push({name: "About"})
   }
 
-  mousedown(id: number) {
+  mousedown(id: number): void {
     const longTouchDuration = 1000
     this.touchStartTime = new Date().getTime()
     this.isTouched = true
@@ -112,12 +112,12 @@ export default class Home extends Vue {
     }, longTouchDuration)
   }
 
-  mouseup() {
+  mouseup(): void {
     this.isTouched = false
   }
 
-  copyPassword(id: number) {
-    let copy_lists: any
+  copyPassword(id: number): void {
+    let copy_lists!: Array<Record<string, string>>
     let account!: Account
     for (let i in this.account_list) {
       account = this.account_list[i]
@@ -145,6 +145,8 @@ export default class Home extends Vue {
               {name: "password", value: account.data.password}
             ]
             break
+          default:
+            return
         }
         break
       }
@@ -164,11 +166,11 @@ export default class Home extends Vue {
     })
   }
 
-  view(account: Account) {
+  view(account: Account): void {
     this.$router.push({name: "Detail", params: {id: account.id, type: account.type}})
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     await api.account.delete(id)
     this.account_list = await api.account.list()
   }
