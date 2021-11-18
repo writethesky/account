@@ -18,7 +18,6 @@ const user = {
     changePassword(password: string) {
         return new Promise((resolve, reject) => {
             if (password == "") {
-                reject()
                 return
             }
             http.patch("users/0", {

@@ -137,7 +137,8 @@ http.interceptors.request.use(async (config) => {
 }))
 
 http.interceptors.response.use(async res => {
-    return await getResponseData(res.config.headers!["Request-ID"], res.data)
+    const data = await getResponseData(res.config.headers!["Request-ID"], res.data)
+    return Promise.resolve(data)
 }, async err => {
     err.response.data = await getResponseData(err.config.headers["Request-ID"], err.response.data)
     return Promise.reject(err)
@@ -153,6 +154,9 @@ async function getResponseData(requestID: string, data: any): Promise<any> {
             name: 'AES-GCM',
             iv: ivBuffer
         }, transferKey, data)
+        if (resBody.byteLength == 0) {
+            return ""
+        }
         return JSON.parse(new TextDecoder().decode(resBody))
     }
     return data
