@@ -1,4 +1,4 @@
-# Account
+# Account manager
 
 ![](./public/img/icon.png)
 
@@ -14,6 +14,11 @@ organizations to issue genuine and valid illegal certificates for man-in-the-mid
 computer provided by the company. The company may have a [hook tool](https://github.com/nabla-c0d3/ssl-kill-switch2)
 preset on your computer, which can hook related functions of HTTPS
 
+**Back-end services** To keep your data storage secure, it is recommended that you independently
+deploy [the server](https://github.com/writethesky/account-server)
+on your own server, then recompile the application and let your application communicate with your own server through
+environment variables
+
 ## Downloads
 
 Click [Actions](https://github.com/writethesky/account/actions) to download the app. Then click on any workflow, scroll
@@ -26,7 +31,7 @@ to the bottom of the page, and select the app that matches your operating system
 By default, the Mac only trusts apps downloaded from the Mac App Store and signed with a developer ID, but it also
 blocks "honest apps" without a developer's signature.
 
-To resolve the problem, run the `sudo xattr -rd com.apple.quarantine /Applications/Account.app` command
+To resolve the problem, run the command of `sudo xattr -rd com.apple.quarantine /Applications/Account.app`
 
 ## For developer
 

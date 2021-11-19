@@ -1,6 +1,7 @@
 export interface Account {
     id: number
     title: string
+    description: string
     type: AccountType
     copy_lists: CopyItem[]
     data: any

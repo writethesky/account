@@ -2,7 +2,7 @@
   <div class="detail">
     <div class="back" @click="back">&leftarrow;</div>
     <div class="title">
-      <input v-model="account.title" placeholder="Please enter a name" type="text" @keyup="titleChange">
+      <input v-model="account.title" placeholder="Please enter a title" type="text" @keyup="changed">
     </div>
     <svg v-if="isSecure" aria-hidden="true" class="icon secure" @click="secureTip">
       <use xlink:href="#icon-security"></use>
@@ -15,6 +15,8 @@
                   @change="change"></SSHComponent>
     <DatabaseComponent v-if="account.type == 'database'" :account_data="account.data"
                        @change="change"></DatabaseComponent>
+    <textarea v-model="account.description" class="description" placeholder="description"
+              @keyup="changed"></textarea>
   </div>
 </template>
 
@@ -48,6 +50,7 @@ export default class Detail extends Vue {
   account: Account = {
     id: 0,
     title: "",
+    description: "",
     type: AccountTypeEnum.Normal,
     copy_lists: [],
     data: {},
@@ -57,6 +60,7 @@ export default class Detail extends Vue {
     return store.state.isSecure
   }
 
+  // eslint-disable-next-line
   get AccountTypeEnum() {
     return AccountTypeEnum
   }
@@ -86,7 +90,7 @@ export default class Detail extends Vue {
         break
       }
     }
-    if (this.account.title != "") {
+    if (this.account.title != "" || this.account.description != "") {
       allEmpty = false
     }
     if (allEmpty || !this.isChanged) {
@@ -95,15 +99,15 @@ export default class Detail extends Vue {
     }
 
     if (this.pageMode == PageMode.Create) {
-      await api.account.create(this.account.title, this.account.type, this.account.data)
+      await api.account.create(this.account)
     } else {
-      await api.account.edit(this.account.id, this.account.title, this.account.type, this.account.data)
+      await api.account.edit(this.account)
     }
 
     this.$router.back()
   }
 
-  titleChange(): void {
+  changed(): void {
     this.isChanged = true
   }
 
@@ -158,6 +162,15 @@ export default class Detail extends Vue {
       border-bottom: 1px solid #42b983;
     }
   }
+}
+
+.description {
+  width: -webkit-fill-available;
+  margin: 20px;
+  height: 100px;
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
 }
 
 

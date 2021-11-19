@@ -9,6 +9,7 @@ const account = {
                 resolve(response)
             }).catch(function (err: any) {
                 store.commit("alert", err.response.data.message)
+                reject(err)
             })
         })
     },
@@ -18,19 +19,17 @@ const account = {
                 resolve(response)
             }).catch(function (err: any) {
                 store.commit("alert", err.response.data.message)
+                reject(err)
             })
         })
     },
-    edit(id: number, title: string, type: number, data: any) {
+    edit(account: Account) {
         return new Promise((resolve, reject) => {
-            http.put("accounts/" + id, {
-                "title": title,
-                "type": type,
-                "data": data,
-            }).then(function (response: any) {
+            http.put("accounts/" + account.id, account).then(function (response: any) {
                 resolve(response)
             }).catch(function (err: any) {
                 store.commit("alert", err.response.data.message)
+                reject(err)
             })
         })
     },
@@ -40,19 +39,17 @@ const account = {
                 resolve(response)
             }).catch(function (err: any) {
                 store.commit("alert", err.response.data.message)
+                reject(err)
             })
         })
     },
-    create(title: string, type: number, data: any) {
+    create(account: Account) {
         return new Promise((resolve, reject) => {
-            http.post("accounts", {
-                "title": title,
-                "type": type,
-                "data": data,
-            }).then(function (response: any) {
+            http.post("accounts", account).then(function (response: any) {
                 resolve(response)
             }).catch(function (err: any) {
                 store.commit("alert", err.response.data.message)
+                reject(err)
             })
         })
     }

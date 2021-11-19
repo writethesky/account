@@ -3,7 +3,7 @@ import store from "@/store";
 
 const user = {
     create(username: string, password: string): Promise<any> {
-        return new Promise((resolve, _) => {
+        return new Promise((resolve, reject) => {
             http.post("users", {
                 "password": password,
                 "username": username,
@@ -12,11 +12,12 @@ const user = {
                 resolve(response)
             }).catch(function (err: any) {
                 store.commit("alert", err.response.data.message)
+                reject(err)
             })
         })
     },
-    changePassword(password: string) {
-        return new Promise((resolve, _) => {
+    changePassword(password: string): Promise<void> {
+        return new Promise((resolve, reject) => {
             if (password == "") {
                 return
             }
@@ -27,6 +28,7 @@ const user = {
                 resolve(response)
             }).catch(function (err: any) {
                 store.commit("alert", err.response.data.message)
+                reject(err)
             })
         })
     }
