@@ -8,10 +8,16 @@ const user = {
                 "password": password,
                 "username": username,
             }).then(function (response: any) {
-                store.commit("alert", "Registered successfully")
+                store.commit("alert", {
+                    "type": "success",
+                    "message": "registered successfully",
+                })
                 resolve(response)
             }).catch(function (err: any) {
-                store.commit("alert", err.response.data.message)
+                store.commit("alert", {
+                    "type": "error",
+                    "message": err.response.data.message,
+                })
                 reject(err)
             })
         })
@@ -24,10 +30,16 @@ const user = {
             http.patch("users/0", {
                 "password": password,
             }).then(function (response: any) {
-                store.commit("alert", "Change successfully")
+                store.commit("alert", {
+                    "type": "success",
+                    "message": "change successfully",
+                })
                 resolve(response)
             }).catch(function (err: any) {
-                store.commit("alert", err.response.data.message)
+                store.commit("alert", {
+                    "type": "error",
+                    "message": err.response.data.message,
+                })
                 reject(err)
             })
         })

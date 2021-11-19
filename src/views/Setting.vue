@@ -52,7 +52,10 @@ export default class Setting extends Vue {
   }
 
   changeSecure(): void {
-    store.commit("alert", "You need to log out and then enable or disable it on the login page")
+    store.commit("alert", {
+      "type": "info",
+      "message": "you need to log out and then enable or disable it on the login page",
+    })
   }
 }
 </script>

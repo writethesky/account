@@ -75,7 +75,10 @@ export default class Home extends Vue {
   }
 
   secureTip(): void {
-    store.commit("alert", "Ultimate security is protecting you")
+    store.commit("alert", {
+      "type": "info",
+      "message": "Ultimate security is protecting you",
+    })
   }
 
   logout(): void {
@@ -162,7 +165,10 @@ export default class Home extends Vue {
 
     window.navigator.clipboard.writeText(copyEntity.value).then(() => {
       this.copy_history[account.id] = (index + 1) % copy_lists.length
-      store.commit("alert", copyEntity.name + " was successfully copied")
+      store.commit("alert", {
+        "type": "success",
+        "message": copyEntity.name + " was successfully copied",
+      })
     })
   }
 

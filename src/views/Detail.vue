@@ -117,7 +117,10 @@ export default class Detail extends Vue {
   }
 
   secureTip(): void {
-    store.commit("alert", "Ultimate security is protecting you")
+    store.commit("alert", {
+      "type": "info",
+      "message": "Ultimate security is protecting you",
+    })
   }
 }
 </script>

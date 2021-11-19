@@ -23,10 +23,17 @@ import api from "@/api";
 export default class Password extends Vue {
   password = ""
 
-  changePassword() {
-    api.user.changePassword(this.password)
+  async changePassword(): Promise<void> {
+    await api.user.changePassword(this.password)
+    await api.token.delete()
+    await sleep(3000)
+    await this.$router.push({name: "Login"})
   }
 }
+
+const sleep = (ms: number) => new Promise((resolve) => {
+  setTimeout(resolve, ms);
+});
 </script>
 
 

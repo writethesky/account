@@ -2,7 +2,7 @@ import http from "@/http";
 import store from "@/store";
 
 const token = {
-    has() {
+    has(): boolean {
         const localToken = localStorage.getItem("token")
         if (!localToken) {
             return false
@@ -19,14 +19,14 @@ const token = {
         return isExpire
 
     },
-    delete() {
+    delete(): void {
         localStorage.removeItem("token")
         store.commit("set_token", {
             token: "",
             expire: ""
         })
     },
-    create(username: string, password: string) {
+    create(username: string, password: string): Promise<any> {
         return new Promise((resolve, reject) => {
             http.post("tokens", {
                 "password": password,
@@ -35,9 +35,17 @@ const token = {
                 store.commit("set_token", response)
                 localStorage.setItem("token", JSON.stringify(response))
                 localStorage.setItem("username", username)
+                store.commit("alert", {
+                    "type": "success",
+                    "message": "login successfully",
+                })
                 resolve(response)
             }).catch(function (err: any) {
-                store.commit("alert", err.response.data.message)
+                store.commit("alert", {
+                    "type": "error",
+                    "message": err.response.data.message,
+                })
+                reject(err)
             })
         })
 
